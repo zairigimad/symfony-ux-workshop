@@ -18,7 +18,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="card-body" style="height: 10rem">
+                        <div class="card-body">
 
                             <table class="table">
                                 <thead>
@@ -30,12 +30,20 @@
                                 </thead>
                                 <tbody>
                                 {% for task in pagination %}
-                                    <tr>
+                                    <tr {{ stimulus_controller('task', {
+                                        'url': path('app_task_delete', {'id': task.id})
+                                    }) }}
+                                        data-task-loading-class="spinner-border spinner-border-sm"
+                                    >
                                         <td>{{ task.id }}</td>
                                         <td>{{ task.label }}</td>
                                         <td>
                                             <a href="{{ path('app_task_show', {'id': task.id}) }}">Consulter</a>
-                                            <a href="{{ path('app_task_edit', {'id': task.id}) }}">Modifier</a>
+                                            <a href="{{ path('app_task_edit', {'id': task.id}) }}" data-turbo="false">Modifier</a>
+                                            <a  href="#" {{ stimulus_action('task', 'remove') }}>
+                                                <span {{ stimulus_target('task', 'loader')}} role="status"></span>
+                                                Supprimer
+                                            </a>
                                         </td>
                                     </tr>
                                 {% else %}
@@ -46,7 +54,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="card-footer d-flex align-items-center">
+                        <div class="card-footer d-flex align-items-center mt-5">
                             <p class="m-0 text-muted">
                                 {{ pagination.getTotalItemCount }} Total
                             </p>
@@ -56,7 +64,9 @@
                         </div>
                     </div>
                 </div>
+                <div id="stream-id">
 
+                </div>
             </div>
         </div>
     </div>
