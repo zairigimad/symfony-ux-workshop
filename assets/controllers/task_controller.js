@@ -39,6 +39,9 @@ export default class extends Controller {
             Turbo.visit(location)
           })
         }
+        else {
+          this.loaderTarget.classList.remove(this.loadingClass);
+        }
       })
     }
 }
