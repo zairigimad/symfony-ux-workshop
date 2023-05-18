@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Task index{% endblock %}
+
+{% block body %}
+    <div class="page-body">
+        <div class="container-xl">
+            <div class="row row-deck row-cards">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Liste des taches</h3>
+                            <div class="card-actions">
+                                <a href="{{ path('app_task_new') }}" class="btn btn-primary" spellcheck="false">
+                                    <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                                    Ajouter une tache
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body" style="height: 10rem">
+
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Label</th>
+                                    <th>actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for task in pagination %}
+                                    <tr>
+                                        <td>{{ task.id }}</td>
+                                        <td>{{ task.label }}</td>
+                                        <td>
+                                            <a href="{{ path('app_task_show', {'id': task.id}) }}">Consulter</a>
+                                            <a href="{{ path('app_task_edit', {'id': task.id}) }}">Modifier</a>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="3">no records found</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer d-flex align-items-center">
+                            <p class="m-0 text-muted">
+                                {{ pagination.getTotalItemCount }} Total
+                            </p>
+                            <div class="pagination m-0 ms-auto">
+                                {{ knp_pagination_render(pagination) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
